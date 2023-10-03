@@ -64,10 +64,17 @@ func _put_days() -> void:
 		day.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		%DaysContainer.add_child(day)
 
+func get_previous_month_days(datetime:Dictionary) -> int:
+	var datet:Dictionary = datetime.duplicate()
+	datet.month -= 1
+	if datet.month == 0: datet.month = 12
+	return date.get_month_days(datet)
+
 func _calc_days_number(temp_date:Dictionary = {}) -> void:
 	if temp_date.is_empty(): temp_date = date.today
 	var first_day = date.first_day_of_the_month(temp_date)
 	var month_days = date.get_month_days(temp_date)
+	var previous_month_days = get_previous_month_days(temp_date)
 	
 	var temp_date2 = temp_date.duplicate()
 	var month_end:bool = false
@@ -77,13 +84,14 @@ func _calc_days_number(temp_date:Dictionary = {}) -> void:
 	var out:int = 1
 	for child in %DaysContainer.get_children():
 		# connect press to signal
+		month_end = false
 		if child.day_pressed.is_connected(self.day_pressed):
 			child.disconnect("day_pressed", self.day_pressed)
 		var day_n = i - first_day
 		if day_n > month_days:
 			day_n = i - month_days - 6
 			month_end = true
-			if i < 36: end_before_last_week = true
+			if i < 37: end_before_last_week = true
 		if month_end == false and 0 < day_n:
 			child.day_pressed.connect(self.day_pressed)
 		if not month_end:
@@ -91,8 +99,10 @@ func _calc_days_number(temp_date:Dictionary = {}) -> void:
 		if month_end:
 			day_n = out
 			out += 1
-		if end_before_last_week and i > 35:
-			invisible = true
+		if end_before_last_week and i > 35: invisible = true
+		if day_n < 1:
+			day_n = previous_month_days + day_n
+			month_end = true
 		child._initialize(day_n, date.is_today(temp_date2), month_end, invisible)
 		i += 1
 
