@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://d03s6uvly8tgi"]
+
+[ext_resource type="Script" path="res://src/entities/day.gd" id="1_b5j0x"]
+
+[node name="Day" type="Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1067.0
+offset_bottom = -554.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+script = ExtResource("1_b5j0x")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -1,0 +1,169 @@
+[gd_scene load_steps=2 format=3 uid="uid://biktanp1fixea"]
+
+[ext_resource type="Script" path="res://src/calendar.gd" id="1_kf71h"]
+
+[node name="Calendar" type="VBoxContainer"]
+offset_right = 270.0
+offset_bottom = 316.0
+script = ExtResource("1_kf71h")
+abbreviate = false
+
+[node name="Header" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="SplitContainer" type="SplitContainer" parent="Header"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="btn_left" type="Button" parent="Header"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+text = "<"
+
+[node name="SplitContainer4" type="SplitContainer" parent="Header"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+
+[node name="lbl_month" type="Label" parent="Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "october"
+
+[node name="lbl_year" type="Label" parent="Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2023"
+horizontal_alignment = 2
+
+[node name="SplitContainer3" type="SplitContainer" parent="Header"]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+
+[node name="btn_right" type="Button" parent="Header"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+text = ">"
+
+[node name="SplitContainer2" type="SplitContainer" parent="Header"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="DayNameContainer" type="GridContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+theme_override_constants/h_separation = 3
+theme_override_constants/v_separation = 5
+columns = 7
+
+[node name="lbl_monday" type="Label" parent="DayNameContainer"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "M"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="lbl_tuesday" type="Label" parent="DayNameContainer"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "T"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="lbl_wednesday" type="Label" parent="DayNameContainer"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "W"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="lbl_thursday" type="Label" parent="DayNameContainer"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "T"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="lbl_friday" type="Label" parent="DayNameContainer"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "F"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="lbl_saturday" type="Label" parent="DayNameContainer"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "S"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="lbl_sunday" type="Label" parent="DayNameContainer"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "S"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DaysContainer" type="GridContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 3
+theme_override_constants/v_separation = 5
+columns = 7
+
+[connection signal="pressed" from="Header/btn_left" to="." method="change_month" binds= [-1]]
+[connection signal="pressed" from="Header/btn_right" to="." method="change_month" binds= [1]]
+[connection signal="pressed" from="DaysContainer/Day" to="DaysContainer/Day" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770520" to="DaysContainer/@Button@770520" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770521" to="DaysContainer/@Button@770521" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770522" to="DaysContainer/@Button@770522" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770523" to="DaysContainer/@Button@770523" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770524" to="DaysContainer/@Button@770524" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770525" to="DaysContainer/@Button@770525" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770526" to="DaysContainer/@Button@770526" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770527" to="DaysContainer/@Button@770527" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770528" to="DaysContainer/@Button@770528" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770529" to="DaysContainer/@Button@770529" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770530" to="DaysContainer/@Button@770530" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770531" to="DaysContainer/@Button@770531" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770532" to="DaysContainer/@Button@770532" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770533" to="DaysContainer/@Button@770533" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770534" to="DaysContainer/@Button@770534" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770535" to="DaysContainer/@Button@770535" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770536" to="DaysContainer/@Button@770536" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770537" to="DaysContainer/@Button@770537" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770538" to="DaysContainer/@Button@770538" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770539" to="DaysContainer/@Button@770539" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770540" to="DaysContainer/@Button@770540" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770541" to="DaysContainer/@Button@770541" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770542" to="DaysContainer/@Button@770542" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770543" to="DaysContainer/@Button@770543" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770544" to="DaysContainer/@Button@770544" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770545" to="DaysContainer/@Button@770545" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770546" to="DaysContainer/@Button@770546" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770547" to="DaysContainer/@Button@770547" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770548" to="DaysContainer/@Button@770548" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770549" to="DaysContainer/@Button@770549" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770550" to="DaysContainer/@Button@770550" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770551" to="DaysContainer/@Button@770551" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770552" to="DaysContainer/@Button@770552" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770553" to="DaysContainer/@Button@770553" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770554" to="DaysContainer/@Button@770554" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770555" to="DaysContainer/@Button@770555" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770556" to="DaysContainer/@Button@770556" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770557" to="DaysContainer/@Button@770557" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770558" to="DaysContainer/@Button@770558" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770559" to="DaysContainer/@Button@770559" method="_on_pressed" flags=18]
+[connection signal="pressed" from="DaysContainer/@Button@770560" to="DaysContainer/@Button@770560" method="_on_pressed" flags=18]
