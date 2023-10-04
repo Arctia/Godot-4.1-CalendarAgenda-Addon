@@ -6,7 +6,7 @@ extends VBoxContainer
 signal date_pressed(timedate:Dictionary)
 
 @export var day_name : bool = true
-@export var abbreviate : bool = true
+@export var abbreviate_form : bool = true
 @export var min_cell_width : int = 36
 @export var min_cell_height : int = 36
 
@@ -15,7 +15,7 @@ var days_abbreviate = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
 var date:Date
 
-var day_tscn = load("res://src/entities/day.tscn")
+var day_tscn = preload("res://addons/calendar/day.tscn")
 
 var date_selected:Dictionary
 
@@ -47,7 +47,7 @@ func _set_month_year_labels() -> void:
 func _set_day_labels() -> void:
 	var i:int = 0
 	var form:Array = days_one_letter
-	if abbreviate: form = days_abbreviate
+	if abbreviate_form: form = days_abbreviate
 	for lbl in %DayNameContainer.get_children():
 		lbl.visible = true
 		if not day_name: 

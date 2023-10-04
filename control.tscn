@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxklr6bn871an"]
+
+[ext_resource type="PackedScene" uid="uid://biktanp1fixea" path="res://addons/calendar/calendar.tscn" id="1_4mgwv"]
+[ext_resource type="Script" path="res://control.gd" id="1_uhffj"]
+
+[node name="Control" type="CenterContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uhffj")
+
+[node name="Calendar" parent="." instance=ExtResource("1_4mgwv")]
+layout_mode = 2
+
+[connection signal="date_pressed" from="Calendar" to="." method="_date_clicked"]

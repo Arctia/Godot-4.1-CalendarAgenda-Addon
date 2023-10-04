@@ -1,3 +1,4 @@
+@tool
 class_name Date
 extends Node
 
@@ -36,12 +37,12 @@ func get_month_days(date:Dictionary) -> int:
 	if date.month == 2 and date.year % 4 == 0: return 29
 	return month_days[date.month]
 
-func is_the_same_day(date1:Dictionary, date2:Dictionary) -> bool:
-	if date1.year != date2.year: return false
-	if date1.month != date2.month: return false
-	if date1.day != date2.day: return false
+func is_the_same_day(dt1:Dictionary, dt2:Dictionary) -> bool:
+	if dt1.year != dt2.year or dt1.month != dt2.month or dt1.day != dt2.day:
+		return false
 	return true
 
 func is_today(date:Dictionary) -> bool:
-	if self.is_the_same_day(today, date): return true
+	if self.is_the_same_day(today, date):
+		return true
 	return false
