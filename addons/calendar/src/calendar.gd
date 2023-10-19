@@ -14,9 +14,7 @@ var days_one_letter = ["M", "T", "W", "T", "F", "S", "S"]
 var days_abbreviate = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
 var date:Date
-
 var day_tscn = preload("res://addons/calendar/day.tscn")
-
 var date_selected:Dictionary
 
 func _ready() -> void:
@@ -28,6 +26,7 @@ func _ready() -> void:
 	self._set_cell_size()
 	self._calc_days_number()
 
+
 func _set_cell_size() -> void:
 	for child in %DayNameContainer.get_children():
 		child.custom_minimum_size.x = min_cell_width
@@ -36,13 +35,16 @@ func _set_cell_size() -> void:
 		child.custom_minimum_size.x = min_cell_width
 		child.custom_minimum_size.y = min_cell_height
 
+
 func _set_labels() -> void:
 	_set_day_labels()
 	_set_month_year_labels()
 
+
 func _set_month_year_labels() -> void:
 	%lbl_month.text = date.month_names[date_selected.month].capitalize()
 	%lbl_year.text = str(date_selected.year)
+
 
 func _set_day_labels() -> void:
 	var i:int = 0
@@ -56,6 +58,7 @@ func _set_day_labels() -> void:
 		lbl.text = form[i]
 		i += 1
 
+
 func _put_days() -> void:
 	for i in range(7*6):
 		var day:Day = day_tscn.instantiate()
@@ -64,11 +67,29 @@ func _put_days() -> void:
 		day.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		%DaysContainer.add_child(day)
 
+
 func get_previous_month_days(datetime:Dictionary) -> int:
 	var datet:Dictionary = datetime.duplicate()
 	datet.month -= 1
 	if datet.month == 0: datet.month = 12
 	return date.get_month_days(datet)
+
+
+func day_signal_disconnect(day:Day) -> void:
+	if day.day_pressed.is_connected(self.day_pressed):
+		day.disconnect("day_pressed", self.day_pressed)
+
+
+func day_signal_connect(day:Day, eom:bool, day_n:int) -> void:
+	if not eom and day_n > 0:
+		day.day_pressed.connect(self.day_pressed)
+
+
+func day_should_be_invisible(full_last_week:bool, i:int) -> bool:
+	if full_last_week and i > 35:
+		return true
+	return false
+
 
 func _calc_days_number(temp_date:Dictionary = {}) -> void:
 	if temp_date.is_empty(): temp_date = date.today
@@ -77,34 +98,43 @@ func _calc_days_number(temp_date:Dictionary = {}) -> void:
 	var previous_month_days = get_previous_month_days(temp_date)
 	
 	var temp_date2 = temp_date.duplicate()
-	var month_end:bool = false
+	var end_of_month:bool = false
 	var end_before_last_week:bool = false
-	var invisible:bool = false
-	var i:int = 1
+	var i:int = 0
 	var out:int = 1
+	
 	for child in %DaysContainer.get_children():
-		# connect press to signal
-		month_end = false
-		if child.day_pressed.is_connected(self.day_pressed):
-			child.disconnect("day_pressed", self.day_pressed)
-		var day_n = i - first_day
-		if day_n > month_days:
-			day_n = i - month_days - 6
-			month_end = true
-			if i < 37: end_before_last_week = true
-		if month_end == false and 0 < day_n:
-			child.day_pressed.connect(self.day_pressed)
-		if not month_end:
-			temp_date2.day = day_n
-		if month_end:
-			day_n = out
-			out += 1
-		if end_before_last_week and i > 35: invisible = true
-		if day_n < 1:
-			day_n = previous_month_days + day_n
-			month_end = true
-		child._initialize(day_n, date.is_today(temp_date2), month_end, invisible)
+		day_signal_disconnect(child)
+		end_of_month = false
 		i += 1
+		var day_number = i - first_day
+		
+		if day_number > month_days:
+			day_number = i - month_days - 6
+			end_of_month = true
+			if i < 37:
+				end_before_last_week = true
+		
+		day_signal_connect(child, end_of_month, day_number)
+		
+		if not end_of_month:
+			temp_date2.day = day_number
+		
+		if end_of_month:
+			day_number = out
+			out += 1
+		
+		if day_number < 1:
+			day_number = previous_month_days + day_number
+			end_of_month = true
+		
+		child._initialize(
+			day_number, 
+			date.is_today(temp_date2), 
+			end_of_month, 
+			day_should_be_invisible(end_before_last_week, i)
+			)
+
 
 func day_pressed(day:int) -> void:
 	var datetime = date_selected.duplicate()
@@ -112,6 +142,7 @@ func day_pressed(day:int) -> void:
 	datetime.erase("weekday")
 	date_pressed.emit(datetime)
 #	print(datetime)
+
 
 # ---------------------------------------------------------------------------- #
 # --- Changing month by buttons
@@ -121,6 +152,7 @@ func change_month(amount:int) -> void:
 	self._fix_date(date_selected)
 	self._calc_days_number(date_selected)
 	self._set_month_year_labels()
+
 
 func _fix_date(datetime:Dictionary) -> void:
 	if datetime.month < 1:
